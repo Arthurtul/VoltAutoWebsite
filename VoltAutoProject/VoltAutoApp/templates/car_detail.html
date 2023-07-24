@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>{{ car.title }}</h2>
+    <img src="{{ car.image.url }}" alt="{{ car.title }}">
+    <p>Model: {{ car.car_model.model_name }} by {{ car.car_model.automaker.name }}</p>
+    <p>Description: {{ car.description }}</p>
+    <p>Price: {{ car.price }}</p>
+    <p>Mileage: {{ car.mileage }}</p>
+    <p>Battery Capacity: {{ car.battery_capacity }}</p>
+    <p>Range Per Charge: {{ car.range_per_charge }}</p>
+
+    <h3>Comments</h3>
+    {% for comment in comments %}
+        <p>{{ comment.author.username }}: {{ comment.content }}</p>
+    {% empty %}
+        <p>No comments yet.</p>
+    {% endfor %}
+
+    {% if user.is_authenticated %}
+        <h3>Add Comment</h3>
+        <form method="post" action="{% url 'add_comment' car.pk %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Add Comment</button>
+        </form>
+    {% else %}
+        <p><a href="{% url 'login' %}">Log in</a> to add a comment.</p>
+    {% endif %}
+{% endblock %}

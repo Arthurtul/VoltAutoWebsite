@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+<h1>Welcome to our used cars website!</h1>
+<p>Find the best used cars here.</p>
+
+{% for car in cars %}
+    <h2>{{ car.title }}</h2>
+    <p>{{ car.description }}</p>
+    <p>Price: {{ car.price }}</p>
+    <hr>
+{% endfor %}
+{% endblock %}
